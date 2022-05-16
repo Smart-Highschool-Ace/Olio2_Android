@@ -29,7 +29,14 @@ android {
     }
 
     buildTypes {
+
+        debug{
+            buildConfigField "String", "BASE_URL", '"https://j5yw3lckta.execute-api.ap-northeast-2.amazonaws.com/dev/graphql    "'
+        }
+
         release {
+            buildConfigField "String", "BASE_URL", '"https://j5yw3lckta.execute-api.ap-northeast-2.amazonaws.com/dev/graphql    "'
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
