@@ -1,14 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.fragment.login.FirsetLoginFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:context=".view.activity.FirstLoginActivity">
+
+
+        <TextView
+            android:id="@+id/text_welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="120dp"
+            android:layout_marginTop="75dp"
+            android:fontFamily="@font/first_login_font_update"
+            android:text="Welcome to"
+            android:textColor="#000000"
+            android:textSize="25dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_olio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="83.5dp"
+            android:src="@drawable/olio_gradient"
+            app:layout_constraintStart_toEndOf="@+id/text_welcome"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/text_polio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="자기자신만의 포트폴리오를 채워나가보세요!"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_welcome" />
+
+        <ImageView
+            android:id="@+id/img_first_back"
+            android:layout_width="145dp"
+            android:layout_height="145dp"
+            android:layout_marginTop="64dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_polio"
+            app:layout_constraintTop_toTopOf="@id/text_polio" />
+
+        <EditText
+            android:id="@+id/first_login_edit"
+            android:layout_width="215dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/first_login_edit_background"
+            android:backgroundTint="#F6F6F6"
+            android:paddingStart="10dp"
+            android:hint="이름을 입력 하세요"
+            android:textSize="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_first_back" />
+
+        <Spinner
+            android:id="@+id/select_grade"
+            android:layout_width="215dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/first_login_edit_background"
+            android:backgroundTint="#F6F6F6"
+            android:dropDownWidth="200dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/first_login_edit" />
+
+
+        <TextView
+            android:id="@+id/oneline_intro_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="243dp"
+            android:text="한줄소개"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/first_login_edit" />
+
+        <EditText
+            android:id="@+id/first_login_comment"
+            android:layout_width="230dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/first_login_edit_background"
+            android:backgroundTint="#F6F6F6"
+            android:hint="내용을 입력하세요"
+            android:paddingLeft="10dp"
+            android:paddingBottom="100dp"
+            android:textSize="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/oneline_intro_text" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/first_login_main"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/ic_olio_guide_next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/first_login_comment" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>
