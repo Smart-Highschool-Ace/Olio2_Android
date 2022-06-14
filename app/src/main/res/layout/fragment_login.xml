@@ -1,143 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.fragment.login.LoginFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+        <variable
+            name="fragment"
+            type="org.gsm.olio.view.fragment.login.LoginFragment" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".view.fragment.login.LoginFragment">
 
-        <ImageView
-            android:id="@+id/login_top"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_olio_login_top"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/sign_in_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="45dp"
-            android:layout_marginBottom="68dp"
-            android:text="Sign in"
-            android:textColor="#6DADA8"
-            android:textSize="25dp"
-            app:layout_constraintBottom_toBottomOf="@+id/login_top"
-            app:layout_constraintRight_toRightOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/email_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sign_in_text">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/email"
-                android:layout_width="270dp"
+            <ImageView
+                android:id="@+id/logo_img"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:backgroundTint="@color/white"
-                android:hint="E-mail 입력"
-                android:inputType="textEmailAddress"
-                android:text="@={viewModel.email}" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="100dp"
+                android:src="@drawable/olio_logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/pwd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email_layout">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="270dp"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/login_google"
+                android:layout_width="250dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="88dp"
+                android:layout_marginBottom="200dp"
+                android:background="@drawable/loginback"
                 android:backgroundTint="@color/white"
-                android:hint="비밀번호"
-                android:inputType="textPassword"
-                android:text="@={viewModel.password}" />
+                android:drawableStart="@drawable/google"
+                android:gravity="center"
+                android:paddingStart="20dp"
+                android:text="SING IN WITH GOOGLE"
+                android:onClick="@{()->fragment.signIn$app_debug()}"
+                android:textSize="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
 
-        </com.google.android.material.textfield.TextInputLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <CheckBox
-            android:id="@+id/email_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="14dp"
-            android:checked="@={viewModel.isRemainEmail}"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pwd" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="아이디 저장"
-            app:layout_constraintStart_toEndOf="@+id/email_save"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pwd" />
-
-        <TextView
-            android:id="@+id/found_pwd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginLeft="55dp"
-            android:text="아이디/비밀번호 찾기"
-            android:textSize="12sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email_save" />
-
-        <Button
-            android:id="@+id/sign_in_btn"
-            android:layout_width="288dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="44dp"
-            android:backgroundTint="#6DADA8"
-            android:hint="Sign in"
-            android:onClick="@{() -> viewModel.signIn()}"
-            android:textColorHint="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/found_pwd" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="50dp"
-            android:onClick="@{() -> viewModel.goRegister()}"
-            android:text="아직 계정이 없으신가요?"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sign_in_btn" />
-
-
-        <ImageView
-            android:id="@+id/login_bottom"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:background="@drawable/ic_olio_login_bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</FrameLayout>
+    </FrameLayout>
+</layout>
