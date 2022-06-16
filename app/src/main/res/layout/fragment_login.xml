@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="fragment"
             type="org.gsm.olio.view.fragment.login.LoginFragment" />
@@ -41,8 +42,8 @@
                 android:drawableStart="@drawable/google"
                 android:gravity="center"
                 android:paddingStart="20dp"
+                android:onClick="@{()->fragment.signIn()}"
                 android:text="SING IN WITH GOOGLE"
-                android:onClick="@{()->fragment.signIn$app_debug()}"
                 android:textSize="15dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
