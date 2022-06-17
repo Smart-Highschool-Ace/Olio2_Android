@@ -12,10 +12,16 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.ApiException
 import org.gsm.olio.R
 import org.gsm.olio.databinding.FragmentLoginBinding
+import org.gsm.olio.util.Constants.SIGN_IN_RESULT_CODE
+import org.gsm.olio.util.Constants.TAG
+import kotlin.math.sign
 
 
 open class LoginFragment : Fragment() {
