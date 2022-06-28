@@ -1,4 +1,4 @@
-package org.gsm.olio.view.util
+package org.gsm.olio.util
 
 object Constants {
     const val TAG = "Olio"
