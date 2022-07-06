@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -17,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
+import dagger.hilt.android.AndroidEntryPoint
 import org.gsm.olio.R
 import org.gsm.olio.databinding.FragmentLoginBinding
 import org.gsm.olio.util.Constants.SIGN_IN_RESULT_CODE
@@ -24,11 +26,13 @@ import org.gsm.olio.util.Constants.TAG
 import kotlin.math.sign
 
 
-open class LoginFragment : Fragment() {
+@AndroidEntryPoint
+class LoginFragment : Fragment() {
 
     private val binding by lazy { FragmentLoginBinding.inflate(layoutInflater) }
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var requestActivity : ActivityResultLauncher<Intent>
+    private val lvm : LoginViewModel by viewModels()
 
 
     override fun onCreateView(
@@ -77,6 +81,8 @@ open class LoginFragment : Fragment() {
                 try {
                     val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
                     val account = task.result!!
+                    lvm.getToken(account.idToken.toString())
+
                     Log.d(TAG, "resultActivity: 성공")
                     findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
                 }catch (e : ApiException){
