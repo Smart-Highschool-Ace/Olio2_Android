@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_olio_background_email_certification_modal">
+
+        <TextView
+            android:id="@+id/email_modal_text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="31dp"
+            android:layout_marginTop="43dp"
+            android:fontFamily="@font/applesdgothicneob"
+            android:text="이메일 인증"
+            android:textColor="@color/black"
+            android:textSize="35dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/retry_email_send"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_marginTop="37dp"
+            android:layout_marginRight="35dp"
+            android:background="@drawable/ic_olio_switch_track_on"
+            android:gravity="center"
+            android:text="이메일 재발송"
+            android:textColor="@color/white"
+            android:textSize="10dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/email_modal_text1" />
+
+        <ImageView
+            android:id="@+id/email_modal_image1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:src="@drawable/ic_olio_email_letter"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/retry_email_send" />
+
+        <TextView
+            android:id="@+id/email_modal_text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:fontFamily="@font/applesdgothicneob"
+            android:gravity="center"
+            android:text="인증 메일을 발송했습니다.\n
+메일함을 확인하여 이메일 인증코드를 입력해주세요. "
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/email_modal_image1" />
+
+        <TextView
+            android:id="@+id/email_modal_fail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="31dp"
+            android:fontFamily="@font/applesdgothicneob"
+            android:text="인증번호가 맞지 않습니다. 다시 입력해주세요"
+            android:textColor="#de4949"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/email_modal_text2" />
+
+        <TextView
+            android:id="@+id/email_modal_text3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="31dp"
+            android:fontFamily="@font/applesdgothicneob"
+            android:text="인증번호 6자리를 입력해주세요."
+            android:textColor="#a6a6a6"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/email_modal_text2" />
+
+        <LinearLayout
+            android:id="@+id/email_code_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="40dp"
+            app:layout_constraintTop_toBottomOf="@+id/email_modal_text3">
+
+            <EditText
+                android:id="@+id/email_code_edit1"
+                android:layout_width="42dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="14dp"
+                android:layout_weight="2"
+                android:background="@drawable/ic_olio_email_code_background"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/email_code_edit2"
+                android:layout_width="42dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="6.74dp"
+                android:layout_marginTop="14dp"
+                android:layout_weight="2"
+                android:background="@drawable/ic_olio_email_code_background"
+                android:inputType="number"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/email_modal_text3" />
+
+            <EditText
+                android:id="@+id/email_code_edit3"
+                android:layout_width="42dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="6.74dp"
+                android:layout_marginTop="14dp"
+                android:layout_weight="2"
+                android:background="@drawable/ic_olio_email_code_background"
+                android:inputType="number"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/email_modal_text3" />
+
+            <EditText
+                android:id="@+id/email_code_edit4"
+                android:layout_width="42dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="6.74dp"
+                android:layout_marginTop="14dp"
+                android:layout_weight="2"
+                android:background="@drawable/ic_olio_email_code_background"
+                android:inputType="number"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/email_modal_text3" />
+
+            <EditText
+                android:id="@+id/email_code_edit5"
+                android:layout_width="42dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="6.74dp"
+                android:layout_marginTop="14dp"
+                android:layout_weight="2"
+                android:background="@drawable/ic_olio_email_code_background"
+                android:inputType="number"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/email_modal_text3" />
+
+            <EditText
+                android:id="@+id/email_code_edit6"
+                android:layout_width="42dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="6.74dp"
+                android:layout_marginTop="14dp"
+                android:layout_weight="2"
+                android:background="@drawable/ic_olio_email_code_background"
+                android:inputType="number"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/email_modal_text3" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/email_code_finish_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:fontFamily="@font/applesdgothicneob"
+            android:text="완료"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/email_code_layout" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,8 +17,8 @@
             android:id="@+id/action_loginFragment_to_firsetLoginFragment"
             app:destination="@id/firsetLoginFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_registerFragment2"
-            app:destination="@id/registerFragment" />
+            android:id="@+id/action_loginFragment_to_firstGuideFragment"
+            app:destination="@id/firstGuideFragment" />
     </fragment>
     <fragment
         android:id="@+id/firstGuideFragment"
@@ -74,11 +74,7 @@
             android:id="@+id/action_firsetLoginFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/registerFragment"
-        android:name="org.gsm.olio.view.fragment.login.RegisterFragment"
-        android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+
     <fragment
         android:id="@+id/portfolioFragment"
         android:name="org.gsm.olio.view.fragment.portfolio.PortfolioFragment"

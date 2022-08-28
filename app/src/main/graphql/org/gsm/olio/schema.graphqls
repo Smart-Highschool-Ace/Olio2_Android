@@ -1,0 +1,410 @@
+type Mutation {
+  authenticateEmail(email: String!, code: String!): statusResult
+
+  sendAuthEmail(email: String!): statusResult
+
+  checkEmail(email: String!): statusResult
+
+  login(token: String!): loginResult
+
+  updateUser(user: UserUpdateInput!): User
+
+  deleteUser: User
+
+  updatePortfolio(portfolio: PortfolioUpdateInput): statusResult
+
+  likePortfolio(id: Int!): statusResult
+
+  createProject(project: ProjectCreateInput): Project
+
+  updateProject(id: Int!, project: ProjectUpdateInput): Project
+
+  deleteProject(id: Int!): Project
+
+  likeProject(id: Int!): statusResult
+}
+
+type Query {
+  user(id: Int): User
+
+  project(id: Int): Project
+
+  myProject(id: Int): [Project]
+
+  allProject(orderBy: String, page: Int): [Project]
+
+  portfolio(id: Int): Portfolio
+
+  allPortfolio: [Portfolio]
+
+  skillSearch(search_word: String!): [Skill]
+
+  nameSearch(name: String!): [User]
+
+  emailSearch(email: String!): [User]
+
+  portfolioSearch(name: String!, orderBy: String, page: Int): [Portfolio]
+
+  projectSearch(name: String!, orderBy: String, page: Int): [Project]
+}
+
+input PortfolioUpdateInput {
+  email: String
+
+  introduction: String
+
+  skills: [PortfolioSkillInput]
+
+  projects: [PortfolioProjectInput]
+
+  prizes: [PortfolioPrizeInput]
+
+  certificates: [PortfolioCertificateInput]
+}
+
+input PortfolioSkillInput {
+  name: String!
+
+  level: Int!
+}
+
+input PortfolioProjectInput {
+  project_id: Int!
+
+  order: Int!
+}
+
+input PortfolioPrizeInput {
+  name: String!
+
+  institution: String!
+
+  prized_at: String!
+}
+
+input PortfolioCertificateInput {
+  name: String!
+
+  institution: String!
+
+  certified_at: String!
+}
+
+input ProjectCreateInput {
+  name: String!
+
+  introduction: String!
+
+  description: String
+
+  link: String
+
+  start_at: String
+
+  end_at: String
+
+  skills: [SkillInput]
+
+  members: [ProjectMemberInput]
+
+  fields: [ProjectFieldInput]
+
+  images: [ProjectImageInput]
+}
+
+input ProjectUpdateInput {
+  name: String
+
+  introduction: String
+
+  description: String
+
+  link: String
+
+  start_at: String
+
+  end_at: String
+
+  skills: [SkillInput]
+
+  members: [ProjectMemberInput]
+
+  fields: [ProjectFieldInput]
+
+  images: [ProjectImageInput]
+}
+
+input ProjectMemberInput {
+  member_id: Int!
+
+  role: String
+}
+
+input ProjectFieldInput {
+  name: String!
+}
+
+input ProjectImageInput {
+  link: String!
+
+  order: Int
+}
+
+input UserCreateInput {
+  email: String!
+
+  password: String!
+
+  school: String!
+
+  name: String!
+
+  entrance_year: Int!
+
+  profile_image: String
+}
+
+input UserUpdateInput {
+  school: String
+
+  name: String
+
+  entrance_year: Int
+
+  profile_image: String
+}
+
+input SkillInput {
+  name: String!
+}
+
+type Portfolio {
+  id: Int
+
+  owner: User
+
+  introduction: String
+
+  email: String
+
+  link: String
+
+  PortfolioLike: [PortfolioLike]
+
+  PortfolioSkill: [PortfolioSkill]
+
+  PortfolioProject: [PortfolioProject]
+
+  PortfolioPrize: [PortfolioPrize]
+
+  PortfolioCertificate: [PortfolioCertificate]
+
+  PortfolioView: [PortfolioView]
+
+  view: Int
+
+  like: Int
+
+  liked: Boolean
+}
+
+type PortfolioView {
+  id: Int
+
+  portfolio_id: Int
+
+  user_id: Int
+
+  source_ip: String
+}
+
+type PortfolioSkill {
+  portfolio_id: Int
+
+  skill_id: Int
+
+  skill: Skill
+
+  level: Int
+}
+
+type PortfolioProject {
+  project: Project
+
+  project_id: Int
+
+  id: Int
+
+  portfolio_id: Int
+
+  order: Int
+}
+
+type PortfolioPrize {
+  name: String
+
+  institution: String
+
+  prized_at: String
+}
+
+type PortfolioCertificate {
+  name: String
+
+  institution: String
+
+  certified_at: String
+}
+
+type PortfolioLike {
+  id: Int
+
+  user: User
+
+  user_id: Int
+}
+
+type User {
+  id: Int
+
+  name: String
+
+  email: String
+
+  school: String
+
+  profile_image: String
+
+  generation: Int
+
+  grade: Int
+
+  portfolio: Portfolio
+
+  projects: [Project]
+
+  participated_projects: [Project]
+
+  liked_projects: [Project]
+
+  liked_portfolios: [Portfolio]
+}
+
+type loginResult {
+  token: String
+
+  error: String
+}
+
+type statusResult {
+  status: Boolean
+
+  error: String
+}
+
+type Project {
+  id: Int
+
+  owner: User
+
+  name: String
+
+  introduction: String
+
+  description: String
+
+  link: String
+
+  logo: String
+
+  start_at: String
+
+  end_at: String
+
+  created_at: String
+
+  updated_at: String
+
+  ProjectView: [ProjectView]
+
+  view: Int
+
+  ProjectSkill: [ProjectSkill]
+
+  ProjectMember: [ProjectMember]
+
+  ProjectField: [ProjectField]
+
+  ProjectImage: [ProjectImage]
+
+  ProjectLike: [ProjectLike]
+
+  like: Int
+
+  liked: Boolean
+}
+
+type ProjectLike {
+  id: Int
+
+  user_id: Int
+
+  project_id: Int
+
+  user: User
+}
+
+type ProjectSkill {
+  skill_id: Int!
+
+  skill: Skill
+
+  project_id: Int
+}
+
+type ProjectMember {
+  member: User
+
+  role: String
+}
+
+type ProjectField {
+  name: String
+}
+
+type ProjectImage {
+  image: String
+
+  order: Int
+}
+
+type MyProjectsQueryType {
+  projects: Project
+
+  order: Int
+}
+
+type ProjectView {
+  id: Int
+
+  portfolio_id: Int
+
+  user_id: Int
+
+  source_ip: String
+}
+
+type Skill {
+  id: ID
+
+  name: String
+}
+
+union NameSearchResult = Portfolio|User
+
+union ExploreResult = Portfolio|Project
+
+schema {
+  query: Query
+  mutation: Mutation
+}
