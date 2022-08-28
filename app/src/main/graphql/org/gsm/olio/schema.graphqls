@@ -46,8 +46,6 @@ type Query {
   portfolioSearch(name: String!, orderBy: String, page: Int): [Portfolio]
 
   projectSearch(name: String!, orderBy: String, page: Int): [Project]
-
-  explore: ExploreResult
 }
 
 input PortfolioUpdateInput {

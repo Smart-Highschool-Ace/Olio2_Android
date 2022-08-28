@@ -1,4 +1,4 @@
-mutation login($token:String!){
+mutation Login($token : String!){
     login(token: $token){
         token
         error
