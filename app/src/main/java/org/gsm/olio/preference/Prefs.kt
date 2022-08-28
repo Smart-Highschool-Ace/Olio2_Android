@@ -16,4 +16,12 @@ class Prefs @Inject constructor(@ApplicationContext private val context: Context
         set(value){
             prefs.edit().putString("token",value).apply()
         }
+
+    var firstExecution:Boolean
+        get() = prefs.getBoolean("isFirst",false)
+        set(value){
+            prefs.edit().putBoolean("isFirst",value).apply()
+        }
+
+
 }

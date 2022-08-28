@@ -19,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.internal.notify
+import org.gsm.olio.MyApplication
 import org.gsm.olio.R
 import org.gsm.olio.databinding.FragmentLoginBinding
 import org.gsm.olio.util.Constants.TAG
@@ -43,6 +44,15 @@ class LoginFragment : Fragment() {
         resultActivity()
 
         return root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        var firstExecution = MyApplication.prefs.firstExecution
+        if(!firstExecution){
+            Log.d(TAG, "LoginFragment_onCreate: ${findNavController().navigate(R.id.action_loginFragment_to_baseGuideFragment)} ")
+            MyApplication.prefs.firstExecution = true
+        }
+        super.onCreate(savedInstanceState)
     }
 
     override fun onStart() {
