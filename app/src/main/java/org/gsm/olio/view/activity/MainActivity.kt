@@ -10,7 +10,6 @@ import org.gsm.olio.R
 @AndroidEntryPoint
 @WithFragmentBindings
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)

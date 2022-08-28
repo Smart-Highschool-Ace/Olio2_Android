@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Olio.SplashIcon"
         tools:targetApi="31">
-
+      
         <activity
             android:name=".view.activity.MainActivity"
             android:exported="true"
