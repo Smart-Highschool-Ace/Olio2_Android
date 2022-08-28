@@ -8,25 +8,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.WithFragmentBindings
-import dagger.hilt.android.components.FragmentComponent
-import dagger.hilt.android.scopes.FragmentScoped
+import okhttp3.internal.notify
 import org.gsm.olio.R
 import org.gsm.olio.databinding.FragmentLoginBinding
-import org.gsm.olio.util.Constants.SIGN_IN_RESULT_CODE
 import org.gsm.olio.util.Constants.TAG
-import kotlin.math.sign
 
 
 @AndroidEntryPoint
@@ -63,7 +58,6 @@ class LoginFragment : Fragment() {
     private fun initGso() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.server_client_id))
-            .requestEmail()
             .build()
 
         googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
@@ -84,14 +78,16 @@ class LoginFragment : Fragment() {
                 try {
                     val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
                     val account = task.result!!
+
                     lvm.loginCheck(account.idToken.toString())
                     Log.d(TAG, "resultActivity: Token : ${account.idToken}")
-                    Log.d(TAG, "resultActivity: 성공")
+
                     findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
                 } catch (e: ApiException) {
                     e.printStackTrace()
                 }
             }else{
+                Toast.makeText(requireContext(), "학교 아이디를 사용해 주세요.", Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "resultActivity: ${it.resultCode}")
             }
         }
