@@ -17,38 +17,8 @@
             android:id="@+id/action_loginFragment_to_firsetLoginFragment"
             app:destination="@id/firsetLoginFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_firstGuideFragment"
-            app:destination="@id/firstGuideFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/firstGuideFragment"
-        android:name="org.gsm.olio.view.fragment.guide.FirstGuideFragment"
-        android:label="FirstGuideFragment" >
-        <action
-            android:id="@+id/action_firstGuideFragment_to_secondeGuideFragment"
-            app:destination="@id/secondeGuideFragment" />
-        <action
-            android:id="@+id/action_firstGuideFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/secondeGuideFragment"
-        android:name="org.gsm.olio.view.fragment.guide.SecondeGuideFragment"
-        android:label="SecondeGuideFragment" >
-        <action
-            android:id="@+id/action_secondeGuideFragment_to_thirdGuideFragment"
-            app:destination="@id/thirdGuideFragment" />
-        <action
-            android:id="@+id/action_secondeGuideFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/thirdGuideFragment"
-        android:name="org.gsm.olio.view.fragment.guide.ThirdGuideFragment"
-        android:label="ThirdGuideFragment" >
-        <action
-            android:id="@+id/action_thirdGuideFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_loginFragment_to_baseGuideFragment"
+            app:destination="@id/baseGuideFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
@@ -99,4 +69,16 @@
         android:name="org.gsm.olio.view.fragment.profile.EditProfileFragment"
         android:label="fragment_edit_profile"
         tools:layout="@layout/fragment_edit_profile" />
+    <fragment
+        android:id="@+id/baseGuideFragment"
+        android:name="org.gsm.olio.view.fragment.guide.BaseGuideFragment"
+        android:label="BaseGuideFragment" >
+        <action
+            android:id="@+id/action_baseGuideFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 </navigation>
