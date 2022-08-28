@@ -3,10 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/s2000/AndroidStudioProjects/Olio/app/src/main/res/drawable-v24/first_login_edit_background.xml" value="0.1" />
         <entry key="..\:/Users/s2000/AndroidStudioProjects/Olio/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="..\:/Users/s2000/AndroidStudioProjects/Olio/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/s2000/AndroidStudioProjects/Olio/app/src/main/res/drawable/olio_logo_custom.xml" value="0.1" />
+        <entry key="..\:/Users/s2000/AndroidStudioProjects/Olio/app/src/main/res/drawable/splash.xml" value="0.151" />
+        <entry key="..\:/Users/s2000/AndroidStudioProjects/Olio/app/src/main/res/font/first_login_font_update.xml" value="0.1841025641025641" />
         <entry key="..\:/Users/s2000/AndroidStudioProjects/Olio/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/s2000/AndroidStudioProjects/Olio/app/src/main/res/layout/activity_splash.xml" value="0.25625" />
+        <entry key="..\:/Users/s2000/AndroidStudioProjects/Olio/app/src/main/res/layout/fragment_edit_profile.xml" value="0.15677083333333333" />
+        <entry key="..\:/Users/s2000/AndroidStudioProjects/Olio/app/src/main/res/layout/fragment_first_guide.xml" value="0.176" />
+        <entry key="..\:/Users/s2000/AndroidStudioProjects/Olio/app/src/main/res/layout/fragment_first_login.xml" value="0.2" />
+        <entry key="..\:/Users/s2000/AndroidStudioProjects/Olio/app/src/main/res/layout/fragment_login.xml" value="0.136" />
+        <entry key="..\:/Users/s2000/AndroidStudioProjects/Olio/app/src/main/res/layout/fragment_register.xml" value="0.2" />
+        <entry key="..\:/Users/s2000/AndroidStudioProjects/Olio/app/src/main/res/layout/fragment_third_guide.xml" value="0.15677083333333333" />
       </map>
     </option>
   </component>
