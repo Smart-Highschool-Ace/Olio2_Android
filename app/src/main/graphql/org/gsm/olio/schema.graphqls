@@ -150,26 +150,8 @@ input ProjectImageInput {
   order: Int
 }
 
-input UserCreateInput {
-  email: String!
-
-  password: String!
-
-  school: String!
-
-  name: String!
-
-  entrance_year: Int!
-
-  profile_image: String
-}
-
 input UserUpdateInput {
-  school: String
-
   name: String
-
-  entrance_year: Int
 
   profile_image: String
 }
@@ -294,6 +276,8 @@ type loginResult {
   token: String
 
   error: String
+
+  joined: Boolean
 }
 
 type statusResult {
