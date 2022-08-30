@@ -14,8 +14,8 @@
             android:id="@+id/action_loginFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_firsetLoginFragment"
-            app:destination="@id/firsetLoginFragment" />
+            android:id="@+id/action_loginFragment_to_firstLoginFragment"
+            app:destination="@id/firstLoginFragment" />
         <action
             android:id="@+id/action_loginFragment_to_baseGuideFragment"
             app:destination="@id/baseGuideFragment" />
@@ -35,13 +35,14 @@
             android:id="@+id/action_mainFragment_to_myProfileFragment"
             app:destination="@id/myProfileFragment" />
     </fragment>
+
     <fragment
-        android:id="@+id/firsetLoginFragment"
-        android:name="org.gsm.olio.view.fragment.login.FirsetLoginFragment"
+        android:id="@+id/firstLoginFragment"
+        android:name="org.gsm.olio.view.fragment.login.FirstLoginFragment"
         android:label="fragment_first_login"
         tools:layout="@layout/fragment_first_login" >
         <action
-            android:id="@+id/action_firsetLoginFragment_to_mainFragment"
+            android:id="@+id/action_firstLoginFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
 
