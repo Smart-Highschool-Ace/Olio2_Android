@@ -1,4 +1,4 @@
-package org.gsm.olio.preference
+package org.gsm.olio.model.db.preference
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
