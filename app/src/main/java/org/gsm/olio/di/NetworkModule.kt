@@ -12,12 +12,27 @@ import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import org.gsm.olio.BuildConfig
 import org.gsm.olio.MyApplication
+import org.gsm.olio.model.service.PostProfileApi
+import org.gsm.olio.model.service.UploadImageApi
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import javax.inject.Singleton
 import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ApolloModule {
+object NetworkModule {
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class type1
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class type2
+
 
     @Provides
     @Singleton
@@ -29,6 +44,38 @@ object ApolloModule {
             .build()
 
     }
+
+    @Provides
+    @Singleton
+    @type1
+    fun retrofit(okHttpClient: OkHttpClient):Retrofit{
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.IMAGE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @type1
+    fun provideImgUpload(@type1 retrofit: Retrofit) : UploadImageApi =retrofit.create(UploadImageApi::class.java)
+
+    @Provides
+    @Singleton
+    @type2
+    fun retrofit2(okHttpClient: OkHttpClient):Retrofit{
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.POST_PROFILE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @type2
+    fun postProfile(@type2 retrofit: Retrofit) : PostProfileApi = retrofit.create(PostProfileApi::class.java)
 
     @Provides
     @Singleton
