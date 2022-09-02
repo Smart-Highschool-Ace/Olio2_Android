@@ -1,60 +1,99 @@
 package org.gsm.olio.view.fragment.login
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import org.gsm.olio.R
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import org.gsm.olio.databinding.FragmentFirstLoginBinding
+import org.gsm.olio.util.Constants.TAG
+import java.io.File
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FirsetLoginFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class FirsetLoginFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+@AndroidEntryPoint
+class FirstLoginFragment : Fragment() {
+    private val binding by lazy { FragmentFirstLoginBinding.inflate(layoutInflater)}
+    private val vm : FirstLoginViewModel by viewModels()
+    lateinit var requestActivity : ActivityResultLauncher<Intent>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_first_login, container, false)
+        initViews()
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FirsetLoginFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FirsetLoginFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    fun initViews(){
+        binding.fragment = this@FirstLoginFragment
+        binding.lifecycleOwner = this@FirstLoginFragment
+
+    }
+
+    fun getProFileImage(){
+        Log.d(TAG,"사진변경 호출")
+        val chooserIntent = Intent(Intent.ACTION_CHOOSER)
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "image/*"
+        chooserIntent.putExtra(Intent.EXTRA_INTENT, intent)
+        chooserIntent.putExtra(Intent.EXTRA_TITLE,"사용할 앱을 선택해주세요.")
+        requestActivity.launch(chooserIntent)
+    }
+
+
+    private fun resultActivity(){
+        requestActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+            if(result.resultCode == Activity.RESULT_OK){
+                val imagePath = result.data!!.data
+
+                val file = File(absolutelyPath(imagePath, requireContext()))
+                val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+                val body = MultipartBody.Part.createFormData("proFile", file.name, requestFile)
+
+                Log.d(TAG,file.name)
+
+                imagePath?.run { setImage(this) }
+
             }
+        }
+    }
+
+    fun setImage(uri : Uri){
+        Glide.with(requireContext())
+            .load(uri)
+            .into(binding.imgFirstBack)
+        binding.selectImg.visibility = View.GONE
+    }
+
+    // 절대경로 변환
+    private fun absolutelyPath(path: Uri?, context : Context): String {
+        var proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
+        var c: Cursor? = context.contentResolver.query(path!!, proj, null, null, null)
+        var index = c?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        c?.moveToFirst()
+
+        var result = c?.getString(index!!)
+
+        return result!!
     }
 }
