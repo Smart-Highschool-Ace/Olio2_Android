@@ -2,7 +2,7 @@ package org.gsm.olio
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
-import org.gsm.olio.preference.Prefs
+import org.gsm.olio.model.db.preference.Prefs
 
 @HiltAndroidApp
 class MyApplication : Application() {
