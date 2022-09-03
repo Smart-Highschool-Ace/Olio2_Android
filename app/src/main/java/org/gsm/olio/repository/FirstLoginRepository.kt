@@ -18,7 +18,7 @@ class FirstLoginRepository @Inject constructor(
     private val api3 : ApolloClient
     ) {
 
-    suspend fun uploadImage(name: String) = api.uploadImage(RequestUrl(name=name,"jpg"))
+    suspend fun uploadImage(name: String) = api.uploadImage(RequestUrl(name=name,"image/jpg"))
 
     suspend fun postProfile(url : String, img : MultipartBody.Part) = api2.postProfile(url = url, image = img)
 
