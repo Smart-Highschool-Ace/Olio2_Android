@@ -19,30 +19,47 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(private val repository: LoginRepository) : ViewModel() {
 
-    fun loginCheck(token: String) {
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> get() = _loading
 
+    private val _firstLogin = MutableLiveData<Boolean>()
+    val firstLogin: LiveData<Boolean> get() = _firstLogin
+
+    init {
+        _firstLogin.value = false
+        _loading.value = false
+    }
+
+    fun loginCheck(token: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val response = try {
+                _loading.postValue(true)
                 repository.loginCheck(token).execute()
             } catch (e: Exception) {
                 e.printStackTrace()
                 null
             }
-
             val data = response?.data?.login
 
-            data?.token?.run {
-                Log.d(TAG, "loginCheck \n token : $token \n jwt : ${data?.token} ")
-                MyApplication.prefs.token = data?.token
-            }
+            data?.let {
+                it?.token?.run {
+                    Log.d(TAG, "loginCheck \n token : $token \n jwt : ${data?.token} ")
+                    MyApplication.prefs.token = this
+                    Log.d(TAG, "loginCheck: jwt : ${MyApplication.prefs.token}")
+                    _firstLogin.postValue(it.joined)
+                    _loading.postValue(false)
+                }
 
-            data?.error?.run {  Log.e(TAG, "loginCheck: ${data?.error}") }
+                it?.error?.run {
+                    Log.e(TAG, "loginCheck: ${data?.error}")
+                    _loading.postValue(false)
+                }
+
+            }
 
         }
 
     }
-
-
 
 
 }
