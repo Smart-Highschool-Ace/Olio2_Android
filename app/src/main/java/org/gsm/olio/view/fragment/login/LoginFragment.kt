@@ -28,7 +28,7 @@ import org.gsm.olio.util.Constants.TAG
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
 
-    private val binding by lazy { FragmentLoginBinding.inflate(layoutInflater) }
+    private val binding : FragmentLoginBinding by viewBinding(CreateMethod.INFLATE)
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var requestActivity: ActivityResultLauncher<Intent>
     private val lvm: LoginViewModel by viewModels()

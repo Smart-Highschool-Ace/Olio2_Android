@@ -30,10 +30,10 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 @AndroidEntryPoint
-class FirstLoginFragment : Fragment() {
-    private val binding by lazy { FragmentFirstLoginBinding.inflate(layoutInflater)}
-    private val vm : FirstLoginViewModel by viewModels()
-    lateinit var requestActivity : ActivityResultLauncher<Intent>
+class FirstLoginFragment : Fragment(R.layout.fragment_first_login) {
+    private val binding: FragmentFirstLoginBinding by viewBinding(CreateMethod.INFLATE)
+    private val vm: FirstLoginViewModel by viewModels()
+    lateinit var requestActivity: ActivityResultLauncher<Intent>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
