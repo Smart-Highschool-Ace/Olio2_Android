@@ -44,41 +44,50 @@ class FirstLoginFragment : Fragment(R.layout.fragment_first_login) {
         return binding.root
     }
 
-    fun initViews(){
-        binding.fragment = this@FirstLoginFragment
-        binding.lifecycleOwner = this@FirstLoginFragment
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        resultActivity()
+    }
 
     }
 
-    fun getProFileImage(){
-        Log.d(TAG,"사진변경 호출")
+    fun getProFileImage() {
+        Log.d(TAG, "사진변경 호출")
         val chooserIntent = Intent(Intent.ACTION_CHOOSER)
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         intent.type = "image/*"
         chooserIntent.putExtra(Intent.EXTRA_INTENT, intent)
-        chooserIntent.putExtra(Intent.EXTRA_TITLE,"사용할 앱을 선택해주세요.")
+        chooserIntent.putExtra(Intent.EXTRA_TITLE, "사용할 앱을 선택해주세요.")
         requestActivity.launch(chooserIntent)
     }
 
 
-    private fun resultActivity(){
-        requestActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
-            if(result.resultCode == Activity.RESULT_OK){
-                val imagePath = result.data!!.data
+    private fun resultActivity() {
+        requestActivity =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        val imagePath = result.data!!.data!!
 
-                val file = File(absolutelyPath(imagePath, requireContext()))
-                val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-                val body = MultipartBody.Part.createFormData("proFile", file.name, requestFile)
+                        val file = File(absolutelyPath(imagePath, requireContext()))
+                        val requestFile = file.asRequestBody("image/*".toMediaType())
+                        var body: MultipartBody.Part = MultipartBody.Part.createFormData(
+                            "multipart/form-data",
+                            file.name,
+                            requestFile
+                        )
+                        var mimeType = mimeType(file)
+                        Log.d(TAG, "fileName : ${file.name}\n 확장자 : ${mimeType.toString()}")
 
                 Log.d(TAG,file.name)
 
-                imagePath?.run { setImage(this) }
+                        imagePath?.run { setImage(this) }
 
             }
         }
     }
 
-    fun setImage(uri : Uri){
+    fun setImage(uri: Uri) {
         Glide.with(requireContext())
             .load(uri)
             .into(binding.imgFirstBack)
@@ -86,7 +95,7 @@ class FirstLoginFragment : Fragment(R.layout.fragment_first_login) {
     }
 
     // 절대경로 변환
-    private fun absolutelyPath(path: Uri?, context : Context): String {
+    private fun absolutelyPath(path: Uri?, context: Context): String {
         var proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
         var c: Cursor? = context.contentResolver.query(path!!, proj, null, null, null)
         var index = c?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
@@ -96,4 +105,14 @@ class FirstLoginFragment : Fragment(R.layout.fragment_first_login) {
 
         return result!!
     }
+
+    // 확장자 가져오기
+    private fun mimeType(file: File): String? {
+        val mimeTypeMap = MimeTypeMap.getSingleton()
+        val extension = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(file).toString())
+        Log.d(TAG, "mimeType: ${extension.toString()}")
+
+        return mimeTypeMap.getMimeTypeFromExtension(extension)
+    }
+
 }
