@@ -12,22 +12,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.MimeTypeMap
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import by.kirich1409.viewbindingdelegate.CreateMethod
+import by.kirich1409.viewbindingdelegate.viewBinding
+import com.apollographql.apollo3.api.Optional
 import com.bumptech.glide.Glide
+import com.google.android.gms.common.api.Api
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import org.gsm.olio.R
 import org.gsm.olio.databinding.FragmentFirstLoginBinding
 import org.gsm.olio.util.Constants.TAG
 import java.io.File
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 @AndroidEntryPoint
 class FirstLoginFragment : Fragment(R.layout.fragment_first_login) {
@@ -40,7 +46,6 @@ class FirstLoginFragment : Fragment(R.layout.fragment_first_login) {
         savedInstanceState: Bundle?
     ): View? {
         initViews()
-
         return binding.root
     }
 
@@ -49,6 +54,9 @@ class FirstLoginFragment : Fragment(R.layout.fragment_first_login) {
         resultActivity()
     }
 
+    private fun initViews() = with(binding) {
+        fragment = this@FirstLoginFragment
+        lifecycleOwner = this@FirstLoginFragment
     }
 
     fun getProFileImage() {
@@ -72,27 +80,33 @@ class FirstLoginFragment : Fragment(R.layout.fragment_first_login) {
                         val file = File(absolutelyPath(imagePath, requireContext()))
                         val requestFile = file.asRequestBody("image/*".toMediaType())
                         var body: MultipartBody.Part = MultipartBody.Part.createFormData(
-                            "multipart/form-data",
+                            "profile",
                             file.name,
                             requestFile
                         )
                         var mimeType = mimeType(file)
                         Log.d(TAG, "fileName : ${file.name}\n 확장자 : ${mimeType.toString()}")
 
-                Log.d(TAG,file.name)
 
                         imagePath?.run { setImage(this) }
 
+                        if (mimeType != null) {
+                            vm.getImg(body)
+                            vm.uploadImage(file.name, mimeType)
+                        }
+                    }
+
+                }
             }
-        }
     }
 
-    fun setImage(uri: Uri) {
+    private fun setImage(uri: Uri) {
         Glide.with(requireContext())
             .load(uri)
             .into(binding.imgFirstBack)
         binding.selectImg.visibility = View.GONE
     }
+
 
     // 절대경로 변환
     private fun absolutelyPath(path: Uri?, context: Context): String {
@@ -113,6 +127,10 @@ class FirstLoginFragment : Fragment(R.layout.fragment_first_login) {
         Log.d(TAG, "mimeType: ${extension.toString()}")
 
         return mimeTypeMap.getMimeTypeFromExtension(extension)
+    }
+
+    fun createUser() = CoroutineScope(Dispatchers.Main).launch {
+        vm.postProfile()
     }
 
 }
