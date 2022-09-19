@@ -10,6 +10,7 @@ import com.apollographql.apollo3.exception.ApolloException
 import com.google.android.gms.common.api.ApiException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.gsm.olio.MyApplication
 import org.gsm.olio.repository.LoginRepository
@@ -26,14 +27,12 @@ class LoginViewModel @Inject constructor(private val repository: LoginRepository
     val firstLogin: LiveData<Boolean> get() = _firstLogin
 
     init {
-        _firstLogin.value = false
         _loading.value = false
     }
 
     fun loginCheck(token: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val response = try {
-                _loading.postValue(true)
                 repository.loginCheck(token).execute()
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -45,20 +44,24 @@ class LoginViewModel @Inject constructor(private val repository: LoginRepository
                 it?.token?.run {
                     Log.d(TAG, "loginCheck \n token : $token \n jwt : ${data?.token} ")
                     MyApplication.prefs.token = this
-                    Log.d(TAG, "loginCheck: jwt : ${MyApplication.prefs.token}")
+                    Log.d(TAG, "loginCheck: joined : ${it.joined}")
                     _firstLogin.postValue(it.joined)
-                    _loading.postValue(false)
                 }
 
                 it?.error?.run {
                     Log.e(TAG, "loginCheck: ${data?.error}")
-                    _loading.postValue(false)
                 }
 
             }
 
         }
+    }
 
+    fun setLoading(type : Boolean){
+        viewModelScope.launch(Dispatchers.Main) {
+            _loading.postValue(type)
+            delay(1500)
+        }
     }
 
 
