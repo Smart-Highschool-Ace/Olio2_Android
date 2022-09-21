@@ -85,13 +85,14 @@ class FirstLoginFragment : Fragment(R.layout.fragment_first_login) {
                             requestFile
                         )
                         var mimeType = mimeType(file)
-                        Log.d(TAG, "fileName : ${file.name}\n 확장자 : ${mimeType.toString()}")
+
+                        Log.d(TAG, "fileName : ${file.name}\n 확장자 : ${mimeType?.toMediaType()}")
 
 
                         imagePath?.run { setImage(this) }
 
                         if (mimeType != null) {
-                            vm.getImg(body)
+                            vm.getImg(body,mimeType)
                             vm.uploadImage(file.name, mimeType)
                         }
                     }
@@ -124,13 +125,14 @@ class FirstLoginFragment : Fragment(R.layout.fragment_first_login) {
     private fun mimeType(file: File): String? {
         val mimeTypeMap = MimeTypeMap.getSingleton()
         val extension = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(file).toString())
-        Log.d(TAG, "mimeType: ${extension.toString()}")
+        Log.d(TAG, "mimeType: $extension")
 
         return mimeTypeMap.getMimeTypeFromExtension(extension)
     }
 
     fun createUser() = CoroutineScope(Dispatchers.Main).launch {
         vm.postProfile()
+        vm.createUser(Optional.presentIfNotNull(binding.firstLoginEdit.text.toString()))
     }
 
 }

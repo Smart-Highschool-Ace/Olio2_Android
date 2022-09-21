@@ -22,8 +22,8 @@ class FirstLoginRepository @Inject constructor(
 
     suspend fun postProfile(url : String, img : MultipartBody.Part) = api2.postProfile(url = url, image = img)
 
-    suspend fun createUser(name:String ,img : String) : ApolloCall<UpdateUserMutation.Data>{
-        return api3.mutation(UpdateUserMutation(UserUpdateInput(name = name as Optional.Absent, profile_image = img as Optional.Absent)))
+    suspend fun createUser(name: Optional<String> ,img : Optional<String>) : ApolloCall<UpdateUserMutation.Data>{
+        return api3.mutation(UpdateUserMutation(UserUpdateInput(name = name , profile_image = img )))
     }
 
 }

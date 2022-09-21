@@ -30,19 +30,23 @@ class FirstLoginViewModel @Inject constructor(
     private val _url = MutableLiveData<String>()
     val url: LiveData<String> get() = _url
 
+    private val _key = MutableLiveData<String>()
+    val key: LiveData<String> get() = _key
+
     private val _name = MutableLiveData<Optional<String>>()
     val name: LiveData<Optional<String>> get() = _name
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> get() = _loading
 
-
     private val _img = MutableLiveData<MultipartBody.Part>()
     val img: LiveData<MultipartBody.Part> get() = _img
 
+    private val _imgType = MutableLiveData<String>()
+    val imgType: LiveData<String> get() = _imgType
+
 
     init {
-        _url.value = ""
         _loading.value = false
     }
 
@@ -55,6 +59,8 @@ class FirstLoginViewModel @Inject constructor(
                     val data = response?.body()!!
                     data.run {
                         _url.postValue(this.data.url.replace(BuildConfig.POST_PROFILE_URL, ""))
+                        _key.postValue(this.data.key)
+                        Log.e(TAG, "uploadImage Key: ${this.data.key} ")
                     }
                 } else {
                     onError("Error : ${response.message()}")
@@ -65,31 +71,33 @@ class FirstLoginViewModel @Inject constructor(
 
     }
 
-    suspend fun postProfile(){
+    suspend fun postProfile() {
         _loading.value = true
         Log.d(TAG, "postProfile: ${_loading.value.toString()}")
-        val job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val response = _url.value?.let {
+        job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
+            val response = url.value?.let {
                 img.value?.let { it1 -> repository.postProfile(it, it1) }
             }
-            withContext(Dispatchers.Main){
-                if(response!!.isSuccessful){
+            withContext(Dispatchers.Main) {
+                if (response!!.isSuccessful) {
                     Log.d(TAG, "postProfile: Success")
                     _loading.value = false
                     Log.d(TAG, "postProfile: ${_loading.value.toString()}")
-                }else{
+                } else {
                     onError("Error : ${response.message()}")
                 }
-          }
+            }
 
         }
     }
 
-    suspend fun createUser(name: Optional<String>) {
+    fun createUser(name: Optional<String>) {
         _loading.value = true
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val response = _url.value?.let { repository.createUser(name, Optional.presentIfNotNull(it)).execute() }
-            withContext(Dispatchers.Main){
+            val response = imgType.value.let { repository.createUser(name, Optional.presentIfNotNull(BuildConfig.POST_PROFILE_URL+key.value+"."+it+"?width=497&height=662")).execute() }
+
+            withContext(Dispatchers.Main) {
+                _loading.postValue(false)
             }
 
         }
@@ -100,8 +108,9 @@ class FirstLoginViewModel @Inject constructor(
         _name.value = name
     }
 
-    fun getImg(img: MultipartBody.Part) {
+    fun getImg(img: MultipartBody.Part,type : String) {
         _img.value = img
+        _imgType.value = type.replace("image/","")
     }
 
     private fun onError(message: String) {
