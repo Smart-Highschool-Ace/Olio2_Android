@@ -57,9 +57,9 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_first_back"
+                android:onClick="@{()->fragment.getProFileImage()}"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:onClick="@{()->fragment.startDefaultGalleryApp()}"
                 android:layout_marginTop="64dp"
                 android:src="@drawable/first_login_profile_background"
                 app:layout_constraintEnd_toEndOf="parent"
