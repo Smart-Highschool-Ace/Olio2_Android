@@ -91,7 +91,7 @@ class FirstLoginFragment : Fragment(R.layout.fragment_first_login) {
 
                         imagePath?.run { setImage(this) }
 
-                        if (mimeType != null) {
+                        mimeType?.run {
                             vm.getImg(body,mimeType)
                             vm.uploadImage(file.name, mimeType)
                         }
