@@ -75,16 +75,20 @@ class FirstLoginViewModel @Inject constructor(
         _loading.value = true
         Log.d(TAG, "postProfile: ${_loading.value.toString()}")
         job = CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            val response = url.value?.let {
-                img.value?.let { it1 -> repository.postProfile(it, it1) }
+            val response = url.value?.run {
+                img.value?.let { it1 -> repository.postProfile(this, it1) }
             }
             withContext(Dispatchers.Main) {
-                if (response!!.isSuccessful) {
-                    Log.d(TAG, "postProfile: Success")
-                    _loading.value = false
-                    Log.d(TAG, "postProfile: ${_loading.value.toString()}")
-                } else {
-                    onError("Error : ${response.message()}")
+                response?.run {
+                    if (this.isSuccessful) {
+                        Log.d(TAG, "postProfile: Success")
+                        _loading.value = false
+                        Log.d(TAG, "postProfile: ${_loading.value.toString()}")
+                    } else {
+                        Log.d(TAG, "postProfile: ${response.message()}")
+                        onError("Error : ${response.message()}")
+                        _loading.value = false
+                    }
                 }
             }
 
